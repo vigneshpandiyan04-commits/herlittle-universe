@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Her Little Universe ❤️</title>
+  <style>
+    :root {
+      --primary-color: #ff4b72;
+      --secondary-color: #ffd1dc;
+      --bg-gradient: linear-gradient(135deg, #0d0a1a 0%, #1a122e 50%, #2a1b3d 100%);
+      --card-bg: rgba(255, 255, 255, 0.07);
+      --card-border: rgba(255, 255, 255, 0.15);
+      --text-color: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-color);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      color: var(--secondary-color);
+      text-shadow: 0 0 10px rgba(255, 75, 114, 0.5);
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.8;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 20px rgba(255, 75, 114, 0.3);
+      border-color: var(--primary-color);
+    }
+
+    .card img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      display: block;
+      transition: scale 0.3s ease;
+    }
+
+    .card:hover img {
+      scale: 1.05;
+    }
+
+    .card-info {
+      padding: 0.8rem;
+      text-align: center;
+      font-size: 0.85rem;
+      opacity: 0.7;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    /* Lightbox Modal */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px);
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 85vh;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(255, 75, 114, 0.4);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2.5rem;
+      color: #fff;
+      cursor: pointer;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Her Little Universe ❤️</h1>
+    <p>A collection of 13 precious moments</p>
+  </header>
+
+  <main class="gallery-grid" id="gallery"></main>
+
+  <!-- Fullscreen Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <span class="close-btn" id="closeBtn">&times;</span>
+    <img id="lightboxImg" src="" alt="Enlarged view">
+  </div>
+
+  <script>
+    const TOTAL_IMAGES = 13;
+    const SUBFOLDER = "images"; // Your folder name containing the images
+    const FILE_EXTENSION = "jpg"; // Change to 'png' or 'jpeg' if needed
+
+    const gallery = document.getElementById("gallery");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightboxImg");
+    const closeBtn = document.getElementById("closeBtn");
+
+    // Generate 13 image cards dynamically
+    for (let i = 1; i <= TOTAL_IMAGES; i++) {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      // Paths like: images/image1.jpg, images/image2.jpg, ..., images/image13.jpg
+      const imagePath = `${SUBFOLDER}/image${i}.${FILE_EXTENSION}`;
+
+      card.innerHTML = `
+        <img src="${imagePath}" alt="Memory ${i}" loading="lazy">
+        <div class="card-info">Memory #${i}</div>
+      `;
+
+      card.addEventListener("click", () => {
+        lightboxImg.src = imagePath;
+        lightbox.classList.add("active");
+      });
+
+      gallery.appendChild(card);
+    }
+
+    // Close lightbox handlers
+    closeBtn.addEventListener("click", () => lightbox.classList.remove("active"));
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) lightbox.classList.remove("active");
+    });
+  </script>
+</body>
+</html>
