@@ -142,23 +142,23 @@
     <img id="lightboxImg" src="" alt="Enlarged view">
   </div>
 
-  <script>
+ <script>
     const TOTAL_IMAGES = 13;
-    const SUBFOLDER = "images"; // Your folder name containing the images
-    const FILE_EXTENSION = "jpg"; // Change to 'png' or 'jpeg' if needed
+    const SUBFOLDER = "assets"; // Matching your subfolder name
+    const FILE_EXTENSION = "jpg"; // Change to 'png' if your images are PNG files
 
     const gallery = document.getElementById("gallery");
     const lightbox = document.getElementById("lightbox");
     const lightboxImg = document.getElementById("lightboxImg");
     const closeBtn = document.getElementById("closeBtn");
 
-    // Generate 13 image cards dynamically
+    // Generate 13 image cards dynamically matching memory-1.jpg pattern
     for (let i = 1; i <= TOTAL_IMAGES; i++) {
       const card = document.createElement("div");
       card.className = "card";
 
-      // Paths like: images/image1.jpg, images/image2.jpg, ..., images/image13.jpg
-      const imagePath = `${SUBFOLDER}/image${i}.${FILE_EXTENSION}`;
+      // Matches path: assets/memory-1.jpg, assets/memory-2.jpg, ...
+      const imagePath = `${SUBFOLDER}/memory-${i}.${FILE_EXTENSION}`;
 
       card.innerHTML = `
         <img src="${imagePath}" alt="Memory ${i}" loading="lazy">
